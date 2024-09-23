@@ -1,0 +1,27 @@
+:root {
+  --font-wubba-lubba: 'WubbaLubbaDubDub';
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  font-family: var(--font-wubba-lubba);
+}
+
+body,
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+  position: relative;
+  font-family: var(--font-wubba-lubba);
+  font-weight: 400;
+  background-color: #222222;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+  color: inherit;
+}
