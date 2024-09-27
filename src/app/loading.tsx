@@ -5,7 +5,6 @@ const Loading = () => {
         marginTop: '100px',
         color: 'gold',
         textAlign: 'center',
-        fontFamily: 'var(--font-wubba-lubba)',
         fontSize: '30px',
       }}
     >

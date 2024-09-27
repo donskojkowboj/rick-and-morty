@@ -1,15 +1,2 @@
 .homePage {
-  font-family: var(--font-wubba-lubba);
-  width: 100%;
-
-  &__links {
-    display: flex;
-    justify-content: space-evenly;
-    color: white;
-    font-size: 30px;
-
-    a:hover {
-      border-bottom: 1px white solid;
-    }
-  }
 }

@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
-import Link from 'next/link';
 import localFont from 'next/font/local';
 
 import { Header } from '@/components/Header';
@@ -26,11 +25,9 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body className={wubbaLubbaFont.variable}>
+      <body className={wubbaLubbaFont.className}>
         <Container>
-          <Link href="/">
-            <Header />
-          </Link>
+          <Header />
           {children}
         </Container>
       </body>

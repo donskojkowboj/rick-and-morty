@@ -1,5 +1,6 @@
-import { instance } from '@/api/config/config';
+import { Api_Endpoints } from '@/api/config/config';
 
-export const getEpisodes = (params?: string | number) => {
-  return instance.get('/episode', { params });
+export const getAllEpisodes = async () => {
+  const data = await fetch(Api_Endpoints.episodes);
+  return await data.json();
 };

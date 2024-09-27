@@ -1,0 +1,35 @@
+.characters {
+  margin-top: 40px;
+  color: white;
+
+  &__content {
+    margin: 40px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  &__link {
+    display: flex;
+    width: fit-content;
+
+    &:hover {
+      border-bottom: 1px white solid;
+      margin-bottom: -1px;
+    }
+  }
+
+  &__wrapper {
+    padding: 10px;
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    border: 1px solid white;
+  }
+
+  &__name {
+    margin-top: 10px;
+    text-align: center;
+    color: white;
+  }
+}
