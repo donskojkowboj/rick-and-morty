@@ -15,9 +15,7 @@ const CharactersPage = async () => {
       </Link>
       <div className={styles.characters__content}>
         {characters.results.map((char) => (
-          <Link href={`/character/${char.id}`} key={char.id}>
-            <Card img={char.image} name={char.name} />
-          </Link>
+          <Card key={char.id} id={char.id} img={char.image} name={char.name} />
         ))}
       </div>
     </div>
