@@ -1,9 +1,9 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { getAllCharacters } from '@/api/services/getAllCharacters';
 
 import styles from './CharactersPage.module.scss';
+import { Card } from '@/components/UIComponents/Card';
 
 const CharactersPage = async () => {
   const characters = await getAllCharacters();
@@ -16,15 +16,7 @@ const CharactersPage = async () => {
       <div className={styles.characters__content}>
         {characters.results.map((char) => (
           <Link href={`/character/${char.id}`} key={char.id}>
-            <div className={styles.characters__wrapper}>
-              <Image
-                width={200}
-                height={200}
-                src={char.image}
-                alt={char.name}
-              />
-              <p className={styles.characters__name}>{char.name}</p>
-            </div>
+            <Card img={char.image} name={char.name} />
           </Link>
         ))}
       </div>

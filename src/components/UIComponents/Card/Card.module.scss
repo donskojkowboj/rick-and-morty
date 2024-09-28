@@ -1,19 +1,13 @@
 .card {
-  color: white;
-  padding: 25px;
+  padding: 10px;
+  display: flex;
   width: fit-content;
-  &__img {
-    width: 200px;
-    height: auto;
-  }
-
-  &__wrapper {
-    display: flex;
-    align-items: flex-end;
-    gap: 10px;
-  }
+  flex-direction: column;
+  border: 1px solid white;
 
   &__name {
-    font-size: 25px;
+    margin-top: 10px;
+    text-align: center;
+    color: white;
   }
 }

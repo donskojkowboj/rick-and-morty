@@ -2,7 +2,7 @@ import {
   CharacterFilters,
   Characters,
 } from '@/types/models/character/character';
-import { Api_Endpoints } from '@/api/config/config';
+import { ApiEndpoints } from '@/api/config/config';
 import { buildQueryString } from '@/api/helpers/buildQueryString';
 
 export const getCharactersWithFilters = async (
@@ -13,7 +13,7 @@ export const getCharactersWithFilters = async (
   const stringifyIds = decodeURIComponent(ids);
 
   const data = await fetch(
-    `${Api_Endpoints.characters}/${stringifyIds}?${query}`,
+    `${ApiEndpoints.characters}/${stringifyIds}?${query}`,
   );
   return await data.json();
 };
