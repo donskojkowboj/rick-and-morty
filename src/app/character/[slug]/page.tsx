@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { getCharacter } from '@/api/services/getCharacter';
+import { getCharacter } from '@/api/services/characters/getCharacter';
 
 import styles from './CharacterPage.module.scss';
 
@@ -24,7 +24,7 @@ const CharacterPage = async ({ params }: CharacterPageProps) => {
 
   return (
     <div className={styles.character}>
-      <Link className={styles.character__link} href="/characters">
+      <Link className={styles.character__link} href="/characters/?page=1">
         Back to all characters
       </Link>
       <div className={styles.character__card}>

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { getCharactersWithFilters } from '@/api/services/getCharactersWithFilters';
+import { getCharactersWithFilters } from '@/api/services/characters/getCharactersWithFilters';
 import { CharacterFilters } from '@/types/models/character/character';
 import { Card } from '@/components/UIComponents/Card';
 
@@ -15,7 +15,7 @@ const CharactersFiltered = async ({ params, searchParams }: CharactersPageProps)
 
   return (
     <div className={styles.characters}>
-      <Link className={styles.characters__link} href="/characters">
+      <Link className={styles.characters__link} href="/characters/?page=1">
         Back to all characters
       </Link>
       <div className={styles.characters__content}>

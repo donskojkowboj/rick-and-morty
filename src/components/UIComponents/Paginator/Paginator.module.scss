@@ -1,0 +1,30 @@
+.paginator {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  gap: 10px;
+
+  &__btn {
+    padding: 24px 30px;
+    font-size: 15px;
+    border-radius: 25px;
+    background-color: #02afc5;
+
+    &:hover {
+      background-color: #088898;
+      color: white;
+    }
+  }
+
+  &__active {
+    color: #08c952;
+  }
+
+  &__disabled {
+    color: gray;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+}

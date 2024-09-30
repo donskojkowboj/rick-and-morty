@@ -1,12 +1,21 @@
 import Link from 'next/link';
 
-import { getAllCharacters } from '@/api/services/getAllCharacters';
+import { getAllCharacters } from '@/api/services/characters/getAllCharacters';
+import { Card } from '@/components/UIComponents/Card';
+import { Paginator } from '@/components/UIComponents/Paginator';
 
 import styles from './CharactersPage.module.scss';
-import { Card } from '@/components/UIComponents/Card';
 
-const CharactersPage = async () => {
-  const characters = await getAllCharacters();
+interface SearchParams {
+  page?: string;
+}
+
+interface CharactersPageProps {
+  searchParams: SearchParams;
+}
+
+const CharactersPage = async ({ searchParams }: CharactersPageProps) => {
+  const characters = await getAllCharacters(Number(searchParams.page));
 
   return (
     <div className={styles.characters}>
@@ -18,6 +27,8 @@ const CharactersPage = async () => {
           <Card key={char.id} id={char.id} img={char.image} name={char.name} />
         ))}
       </div>
+
+      <Paginator urlPage={Number(searchParams.page)} info={characters.info} />
     </div>
   );
 };
