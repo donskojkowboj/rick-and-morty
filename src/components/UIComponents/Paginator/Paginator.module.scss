@@ -6,6 +6,22 @@
   font-size: 15px;
   gap: 10px;
 
+  &__pageLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    width: 32px;
+    height: 32px;
+    color: black;
+    background-color: grey;
+
+    &:hover {
+      background-color: white;
+      opacity: 0.5;
+    }
+  }
+
   &__btn {
     padding: 24px 30px;
     font-size: 15px;
@@ -19,7 +35,12 @@
   }
 
   &__active {
-    color: #08c952;
+    background-color: #08c952;
+    color: white;
+
+    &:hover {
+      background-color: lightgreen;
+    }
   }
 
   &__disabled {

@@ -17,6 +17,10 @@ interface CharactersPageProps {
 const CharactersPage = async ({ searchParams }: CharactersPageProps) => {
   const characters = await getAllCharacters(Number(searchParams.page));
 
+  if (!searchParams.page) {
+    searchParams.page = '1';
+  }
+
   return (
     <div className={styles.characters}>
       <Link className={styles.characters__link} href={`/characters/1,183`}>
@@ -28,7 +32,7 @@ const CharactersPage = async ({ searchParams }: CharactersPageProps) => {
         ))}
       </div>
 
-      <Paginator urlPage={Number(searchParams.page)} info={characters.info} />
+      <Paginator source={'/characters'} urlPage={Number(searchParams.page)} info={characters.info} />
     </div>
   );
 };

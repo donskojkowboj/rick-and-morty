@@ -24,7 +24,7 @@ const CharacterPage = async ({ params }: CharacterPageProps) => {
 
   return (
     <div className={styles.character}>
-      <Link className={styles.character__link} href="/characters/?page=1">
+      <Link className={styles.character__link} href="/characters">
         Back to all characters
       </Link>
       <div className={styles.character__card}>

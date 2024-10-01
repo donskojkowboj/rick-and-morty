@@ -15,7 +15,7 @@ const CharactersFiltered = async ({ params, searchParams }: CharactersPageProps)
 
   return (
     <div className={styles.characters}>
-      <Link className={styles.characters__link} href="/characters/?page=1">
+      <Link className={styles.characters__link} href="/characters">
         Back to all characters
       </Link>
       <div className={styles.characters__content}>
