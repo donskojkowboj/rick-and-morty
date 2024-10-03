@@ -6,17 +6,17 @@ import styles from './Paginator.module.scss';
 
 interface PaginatorProps {
   source: string;
-  urlPage: number;
+  activePage: string | undefined;
   info: ResponseInfo;
 }
 
-export const Paginator = ({ source, urlPage, info }: PaginatorProps) => {
+export const Paginator = ({ source, activePage = '1', info }: PaginatorProps) => {
   const pagesCount = info.pages;
   const pagesToShow = 3;
   const halfPagesToShow = Math.floor(pagesToShow / 2);
 
-  let startPage = Math.max(1, urlPage - halfPagesToShow);
-  let endPage = Math.min(pagesCount, urlPage + halfPagesToShow);
+  let startPage = Math.max(1, Number(activePage) - halfPagesToShow);
+  let endPage = Math.min(pagesCount, Number(activePage) + halfPagesToShow);
 
   if (endPage - startPage < pagesToShow - 1) {
     endPage = Math.min(pagesCount, startPage + pagesToShow - 1);
@@ -24,13 +24,15 @@ export const Paginator = ({ source, urlPage, info }: PaginatorProps) => {
   }
 
   const handleNextBtnStyles = () => {
-    return urlPage === pagesCount
+    return Number(activePage) === pagesCount
       ? `${styles.paginator__btn} ${styles.paginator__disabled}`
       : `${styles.paginator__btn}`;
   };
 
   const handlePrevBtnStyles = () => {
-    return urlPage == 1 ? `${styles.paginator__btn} ${styles.paginator__disabled}` : `${styles.paginator__btn}`;
+    return Number(activePage) == 1
+      ? `${styles.paginator__btn} ${styles.paginator__disabled}`
+      : `${styles.paginator__btn}`;
   };
 
   const displayPages = () => {
@@ -41,9 +43,15 @@ export const Paginator = ({ source, urlPage, info }: PaginatorProps) => {
     return pages;
   };
 
+  const linkClassname = (page: number) => {
+    return page == Number(activePage)
+      ? `${styles.paginator__pageLink} ${styles.paginator__active}`
+      : styles.paginator__pageLink;
+  };
+
   return (
     <div className={styles.paginator}>
-      <Link href={`${source}?page=${urlPage - 1}`} className={handlePrevBtnStyles()}>
+      <Link href={`${source}?page=${Number(activePage) - 1}`} className={handlePrevBtnStyles()}>
         Prev
       </Link>
 
@@ -57,13 +65,7 @@ export const Paginator = ({ source, urlPage, info }: PaginatorProps) => {
       )}
 
       {displayPages().map((page) => (
-        <Link
-          className={
-            page == urlPage ? `${styles.paginator__pageLink} ${styles.paginator__active}` : styles.paginator__pageLink
-          }
-          key={page}
-          href={`${source}?page=${page}`}
-        >
+        <Link className={linkClassname(page)} key={page} href={`${source}?page=${page}`}>
           {page}
         </Link>
       ))}
@@ -77,7 +79,7 @@ export const Paginator = ({ source, urlPage, info }: PaginatorProps) => {
         </>
       )}
 
-      <Link href={`${source}?page=${urlPage + 1}`} className={handleNextBtnStyles()}>
+      <Link href={`${source}?page=${Number(activePage) + 1}`} className={handleNextBtnStyles()}>
         Next
       </Link>
     </div>
