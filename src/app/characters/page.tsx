@@ -1,12 +1,14 @@
 import Link from 'next/link';
 
-import { getAllCharacters } from '@/api/services/getAllCharacters';
+import { Card } from '@/components/UIComponents/Card';
+import { Paginator } from '@/components/UIComponents/Paginator';
+import { getAllCharacters } from '@/api/services/characters/getAllCharacters';
+import { NextPageParams } from '@/types/next-page-params';
 
 import styles from './CharactersPage.module.scss';
-import { Card } from '@/components/UIComponents/Card';
 
-const CharactersPage = async () => {
-  const characters = await getAllCharacters();
+const CharactersPage = async ({ searchParams }: NextPageParams) => {
+  const characters = await getAllCharacters(Number(searchParams?.page));
 
   return (
     <div className={styles.characters}>
@@ -18,6 +20,8 @@ const CharactersPage = async () => {
           <Card key={char.id} id={char.id} img={char.image} name={char.name} />
         ))}
       </div>
+
+      <Paginator sourceUrl={'/characters'} activePage={searchParams?.page} pagesCount={characters.info.pages} />
     </div>
   );
 };

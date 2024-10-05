@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { getCharacter } from '@/api/services/getCharacter';
+import { getCharacter } from '@/api/services/characters/getCharacter';
 
 import styles from './CharacterPage.module.scss';
 

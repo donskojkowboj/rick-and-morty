@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { getCharactersWithFilters } from '@/api/services/getCharactersWithFilters';
+import { getCharactersWithFilters } from '@/api/services/characters/getCharactersWithFilters';
 import { CharacterFilters } from '@/types/models/character/character';
 import { Card } from '@/components/UIComponents/Card';
 
