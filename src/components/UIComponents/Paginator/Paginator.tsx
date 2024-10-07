@@ -2,14 +2,35 @@ import Link from 'next/link';
 
 import styles from './Paginator.module.scss';
 
+interface AdditionalQueries {
+  name?: string;
+  status?: string;
+  gender?: string;
+}
+
 interface PaginatorProps {
   sourceUrl: string;
   activePage?: string;
   pagesCount: number;
   pagesToShow?: number;
+  additionalQueries?: AdditionalQueries;
 }
 
-export const Paginator = ({ sourceUrl, activePage = '1', pagesCount, pagesToShow = 3 }: PaginatorProps) => {
+export const Paginator = ({
+  sourceUrl,
+  activePage = '1',
+  pagesCount,
+  pagesToShow = 3,
+  additionalQueries,
+}: PaginatorProps) => {
+  const createQueryString = () => {
+    const params = new URLSearchParams();
+    if (additionalQueries?.name) params.append('name', additionalQueries?.name);
+    if (additionalQueries?.status) params.append('status', additionalQueries?.status);
+    if (additionalQueries?.gender) params.append('gender', additionalQueries?.gender);
+
+    return params.toString() ? `&${params.toString()}` : '';
+  };
   const pageNumber = Number(activePage);
 
   const halfPagesToShow = Math.floor(pagesToShow / 2);
@@ -51,7 +72,7 @@ export const Paginator = ({ sourceUrl, activePage = '1', pagesCount, pagesToShow
 
   return (
     <div className={styles.paginator}>
-      <Link href={`${sourceUrl}?page=${pageNumber - 1}`} className={createPrevBtnStyles()}>
+      <Link href={`${sourceUrl}?page=${pageNumber - 1}${createQueryString()}`} className={createPrevBtnStyles()}>
         Prev
       </Link>
 
@@ -65,7 +86,7 @@ export const Paginator = ({ sourceUrl, activePage = '1', pagesCount, pagesToShow
       )}
 
       {displayPages().map((page) => (
-        <Link className={createLinkClassname(page)} key={page} href={`${sourceUrl}?page=${page}`}>
+        <Link className={createLinkClassname(page)} key={page} href={`${sourceUrl}?page=${page}${createQueryString()}`}>
           {page}
         </Link>
       ))}
@@ -79,7 +100,7 @@ export const Paginator = ({ sourceUrl, activePage = '1', pagesCount, pagesToShow
         </>
       )}
 
-      <Link href={`${sourceUrl}?page=${pageNumber + 1}`} className={createNextBtnStyles()}>
+      <Link href={`${sourceUrl}?page=${pageNumber + 1}${createQueryString()}`} className={createNextBtnStyles()}>
         Next
       </Link>
     </div>
