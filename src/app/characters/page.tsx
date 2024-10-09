@@ -1,7 +1,5 @@
-import Link from 'next/link';
-
 import { Card } from '@/components/UIComponents/Card';
-import { FilterPopup } from '@/components/UIComponents/FilterPopup';
+import { Filter } from '../../components/UIComponents/Filter';
 import { Paginator } from '@/components/UIComponents/Paginator';
 import { getAllCharacters } from '@/api/services/characters/getAllCharacters';
 import { NextPageParams } from '@/types/next-page-params';
@@ -25,17 +23,7 @@ const CharactersPage = async ({ searchParams }: NextPageParams) => {
   return (
     <div className={styles.characters}>
       <div className={styles.characters__filterWrapper}>
-        {searchParams?.filter === 'true' ? (
-          <Link className={styles.characters__link} href={`/characters`}>
-            Close
-          </Link>
-        ) : (
-          <Link className={styles.characters__link} href={`/characters?filter=true`}>
-            Filter characters
-          </Link>
-        )}
-
-        {searchParams?.filter === 'true' && <FilterPopup />}
+        <Filter />
       </div>
 
       {!characters?.results ? (
