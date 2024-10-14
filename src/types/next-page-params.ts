@@ -1,4 +1,8 @@
 export interface NextPageParams {
   params?: { slug: string };
-  searchParams?: { [key: string]: string };
+  searchParams?: Record<string, string> & SearchParamsPage;
+}
+
+export interface SearchParamsPage {
+  page?: string;
 }

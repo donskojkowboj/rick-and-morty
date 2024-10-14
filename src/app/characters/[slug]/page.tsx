@@ -5,6 +5,7 @@ import { CharacterFilters } from '@/types/models/character/character';
 import { Card } from '@/components/UIComponents/Card';
 
 import styles from '../CharactersPage.module.scss';
+import { Paginator } from '@/components/UIComponents/Paginator';
 
 interface CharactersPageProps {
   params: { slug: string };
@@ -12,6 +13,8 @@ interface CharactersPageProps {
 }
 const CharactersFiltered = async ({ params, searchParams }: CharactersPageProps) => {
   const characters = await getCharactersWithFilters(params.slug, searchParams);
+
+  const charactersCount = characters.length;
 
   return (
     <div className={styles.characters}>
@@ -23,6 +26,7 @@ const CharactersFiltered = async ({ params, searchParams }: CharactersPageProps)
           <Card id={char.id} name={char.name} img={char.image} key={char.id} />
         ))}
       </div>
+      {charactersCount > 20 && <Paginator pagesCount={charactersCount / 20} sourceUrl={'/characters'} />}
     </div>
   );
 };
