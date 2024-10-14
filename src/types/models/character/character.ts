@@ -1,5 +1,6 @@
 import { ApiLink } from '@/types/api-link';
 import { ResponseInfo } from '@/types/response-info';
+import { SearchParamsPage } from '@/types/next-page-params';
 
 export interface Character {
   id: number;
@@ -24,7 +25,9 @@ export interface CharactersResponse {
   results: Character[];
 }
 
-export interface CharacterFilters {
+export type CharacterFilters = Record<string, string> & CharacterFiltersType;
+
+export interface CharacterFiltersType extends SearchParamsPage {
   name?: string;
   status?: CharacterStatus;
   species?: string;

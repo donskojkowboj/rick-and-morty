@@ -1,30 +1,22 @@
 import Link from 'next/link';
 
-import styles from './Paginator.module.scss';
-import { createDynamicQueryString } from '@/api/helpers/createDynamicQueryString';
+import { buildQueryString } from '@/api/helpers/buildQueryString';
 
-interface AdditionalQueries {
-  name?: string;
-  status?: string;
-  gender?: string;
-}
+import styles from './Paginator.module.scss';
 
 interface PaginatorProps {
   sourceUrl: string;
-  activePage?: string;
   pagesCount: number;
   pagesToShow?: number;
-  additionalQueries?: AdditionalQueries;
+  searchParams?: Record<string, string>;
 }
 
-export const Paginator = ({
-  sourceUrl,
-  activePage = '1',
-  pagesCount,
-  pagesToShow = 3,
-  additionalQueries,
-}: PaginatorProps) => {
-  const pageNumber = Number(activePage);
+export const Paginator = ({ sourceUrl, pagesCount, pagesToShow = 3, searchParams }: PaginatorProps) => {
+  const pageNumber = Number(searchParams?.page || '1');
+
+  if (pagesCount < 2) {
+    return null;
+  }
 
   const halfPagesToShow = Math.floor(pagesToShow / 2);
   let startPage = Math.max(1, pageNumber - halfPagesToShow);
@@ -63,19 +55,24 @@ export const Paginator = ({
       : styles.paginator__pageLink;
   };
 
-  const turnPages = (pageChange: number) => {
-    return `${sourceUrl}${createDynamicQueryString(pageChange, additionalQueries?.name, additionalQueries?.status, additionalQueries?.gender)}`;
+  const buildPageUrl = (pageNumber: number) => {
+    const queryString = buildQueryString({
+      ...searchParams,
+      page: pageNumber !== 1 ? String(pageNumber) : undefined,
+    });
+
+    return `${sourceUrl}?${queryString}`;
   };
 
   return (
     <div className={styles.paginator}>
-      <Link href={turnPages(pageNumber - 1)} className={createPrevBtnStyles()}>
+      <Link href={buildPageUrl(pageNumber - 1)} className={createPrevBtnStyles()}>
         Prev
       </Link>
 
       {startPage > 1 && (
         <>
-          <Link className={styles.paginator__pageLink} href={turnPages(1)}>
+          <Link className={styles.paginator__pageLink} href={buildPageUrl(1)}>
             {1}
           </Link>
           {startPage > 2 && <span>...</span>}
@@ -83,7 +80,7 @@ export const Paginator = ({
       )}
 
       {displayPages().map((page) => (
-        <Link className={createLinkClassname(page)} key={page} href={turnPages(page)}>
+        <Link className={createLinkClassname(page)} key={page} href={buildPageUrl(page)}>
           {page}
         </Link>
       ))}
@@ -91,13 +88,13 @@ export const Paginator = ({
       {endPage < pagesCount && (
         <>
           {endPage < pagesCount - 1 && <span>...</span>}
-          <Link className={styles.paginator__pageLink} href={turnPages(pagesCount)}>
+          <Link className={styles.paginator__pageLink} href={buildPageUrl(pagesCount)}>
             {pagesCount}
           </Link>
         </>
       )}
 
-      <Link href={turnPages(pageNumber + 1)} className={createNextBtnStyles()}>
+      <Link href={buildPageUrl(pageNumber + 1)} className={createNextBtnStyles()}>
         Next
       </Link>
     </div>

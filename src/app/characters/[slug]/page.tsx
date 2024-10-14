@@ -16,12 +16,6 @@ const CharactersFiltered = async ({ params, searchParams }: CharactersPageProps)
 
   const charactersCount = characters.length;
 
-  const displayPaginator = () => {
-    if (charactersCount > 20) {
-      return <Paginator pagesCount={charactersCount / 20} sourceUrl={'/characters'} />;
-    }
-  };
-
   return (
     <div className={styles.characters}>
       <Link className={styles.characters__link} href="/characters">
@@ -32,7 +26,7 @@ const CharactersFiltered = async ({ params, searchParams }: CharactersPageProps)
           <Card id={char.id} name={char.name} img={char.image} key={char.id} />
         ))}
       </div>
-      {displayPaginator()}
+      {charactersCount > 20 && <Paginator pagesCount={charactersCount / 20} sourceUrl={'/characters'} />}
     </div>
   );
 };

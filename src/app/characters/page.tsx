@@ -1,33 +1,26 @@
 import { Card } from '@/components/UIComponents/Card';
-import { Filter } from '../../components/UIComponents/Filter';
+import { Filter } from '@/components/UIComponents/Filter';
 import { Paginator } from '@/components/UIComponents/Paginator';
 import { getAllCharacters } from '@/api/services/characters/getAllCharacters';
 import { NextPageParams } from '@/types/next-page-params';
+import { CharacterFilters } from '@/types/models/character/character';
 
 import styles from './CharactersPage.module.scss';
 
-const CharactersPage = async ({ searchParams }: NextPageParams) => {
-  const characters = await getAllCharacters({
-    page: Number(searchParams?.page),
-    gender: searchParams?.gender,
-    name: searchParams?.name,
-    status: searchParams?.status,
-  });
+interface CharactersPageProps extends NextPageParams {
+  searchParams?: CharacterFilters;
+}
 
-  const handleCharactersDisplay = () => {
-    if (!characters.results) {
-      return <div className={styles.characters__notFound}>No characters found. Please change your filter settings</div>;
-    }
-  };
+const CharactersPage = async ({ searchParams }: CharactersPageProps) => {
+  const characters = await getAllCharacters(searchParams);
 
   return (
     <div className={styles.characters}>
       <div className={styles.characters__filterWrapper}>
         <Filter />
       </div>
-
       {!characters?.results ? (
-        handleCharactersDisplay()
+        <div className={styles.characters__notFound}>No characters found. Please change your filter settings</div>
       ) : (
         <>
           <div className={styles.characters__content}>
@@ -36,12 +29,7 @@ const CharactersPage = async ({ searchParams }: NextPageParams) => {
             ))}
           </div>
 
-          <Paginator
-            sourceUrl={'/characters'}
-            activePage={searchParams?.page}
-            pagesCount={characters.info.pages}
-            additionalQueries={{ name: searchParams?.name, status: searchParams?.status, gender: searchParams?.gender }}
-          />
+          <Paginator sourceUrl={'/characters'} pagesCount={characters.info.pages} searchParams={searchParams} />
         </>
       )}
     </div>

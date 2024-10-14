@@ -1,20 +1,10 @@
-import { CharactersResponse } from '@/types/models/character/character';
+import { CharacterFilters, CharactersResponse } from '@/types/models/character/character';
 import { ApiEndpoints } from '@/api/config/config';
-import { createDynamicQueryString } from '@/api/helpers/createDynamicQueryString';
+import { buildQueryString } from '@/api/helpers/buildQueryString';
 
-interface getAllCharactersProps {
-  page?: number;
-  name?: string;
-  status?: string;
-  gender?: string;
-}
+export const getAllCharacters = async (params: CharacterFilters | undefined): Promise<CharactersResponse> => {
+  const queryString = buildQueryString(params);
 
-export const getAllCharacters = async ({
-  page,
-  name,
-  status,
-  gender,
-}: getAllCharactersProps): Promise<CharactersResponse> => {
-  const data = await fetch(`${ApiEndpoints.characters}/${createDynamicQueryString(page, name, status, gender)}`);
+  const data = await fetch(`${ApiEndpoints.characters}/?${queryString}`);
   return await data.json();
 };

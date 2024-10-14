@@ -1,8 +1,11 @@
 'use client';
 
-import styles from './Filter.module.scss';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+
+import { buildQueryString } from '@/api/helpers/buildQueryString';
+
+import styles from './Filter.module.scss';
 
 export const Filter = () => {
   const searchParams = useSearchParams();
@@ -15,8 +18,8 @@ export const Filter = () => {
     gender: searchParams.get('gender') || '',
   });
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = event.target;
 
     setFormData((prevState) => ({
       ...prevState,
@@ -24,15 +27,9 @@ export const Filter = () => {
     }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const params = new URLSearchParams();
-
-    if (formData.name.trim()) params.append('name', formData.name.trim());
-    if (formData.status) params.append('status', formData.status);
-    if (formData.gender) params.append('gender', formData.gender);
-
-    router.push(`/characters?${params.toString()}`);
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    router.push(`/characters/?${buildQueryString(formData)}`);
   };
 
   useEffect(() => {
